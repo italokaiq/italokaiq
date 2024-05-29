@@ -20,7 +20,7 @@ model Task {
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -30,7 +30,7 @@ model Category {
   tasks Task[]
 
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
