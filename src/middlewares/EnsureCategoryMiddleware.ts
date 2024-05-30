@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../database";
 import { AppError } from "../errors";
 
-class EnsureTaskMiddleware {
+class EnsureCategoryMiddleware {
   public idExists = async (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);
     const category = await prisma.category.findFirst({
@@ -34,4 +34,4 @@ class EnsureTaskMiddleware {
   };
 }
 
-export const ensureTask = new EnsureTaskMiddleware();
+export const ensureCategory = new EnsureCategoryMiddleware();
