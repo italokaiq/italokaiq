@@ -49,6 +49,7 @@ export class TaskService {
   public findOne = async (task: Task): Promise<Task> => {
     const result = await this.prisma.findFirst({
       where: { id: task.id },
+      include: { category: true },
     });
     return taskReturnSchema.parse(result);
   };

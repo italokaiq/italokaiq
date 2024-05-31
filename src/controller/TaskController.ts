@@ -5,32 +5,36 @@ export class TaskController {
   private service = new TaskService();
 
   public create = async (req: Request, res: Response): Promise<Response> => {
-    const userId = Number(req.params.userId);
-    const response = await this.service.create(req.body, userId);
-    return res.status(200).json(response);
+    const userId = res.locals.decoded.id;
+    const response = await this.service.create(userId, req.body);
+    return res.status(201).json(response);
   };
 
-  public findMany = async (req: Request, res: Response): Promise<Response> => {
-    const userId = Number(req.params.userId);
-    const queryP = req.query.category ? String(req.query.category) : undefined;
-    const response = await this.service.findMany(userId, queryP);
+  public findMany = async (
+    { query }: Request,
+    res: Response
+  ): Promise<Response> => {
+    const userId = res.locals.decoded.id;
+    const queryParams = query.category ? String(query.category) : undefined;
+    const response = await this.service.findMany(userId, queryParams);
     return res.status(200).json(response);
   };
 
   public findOne = async (req: Request, res: Response): Promise<Response> => {
-    const response = await this.service.findOne(req.body);
+    const task = res.locals.task;
+    const response = await this.service.findOne(task);
     return res.status(200).json(response);
   };
 
   public update = async (req: Request, res: Response): Promise<Response> => {
-    const id = Number(req.params.id);
-    const response = await this.service.update(id, req.body);
+    const { id } = req.params;
+    const response = await this.service.update(Number(id), req.body);
     return res.status(200).json(response);
   };
 
   public delete = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    await this.service.delete(id);
-    res.status(200).json();
+    const { id } = req.params;
+    await this.service.delete(Number(id));
+    res.status(204).json();
   };
 }

@@ -7,18 +7,18 @@ import { AppError } from "../errors";
 import { jwtConfig } from "../configs";
 
 export class LoginService {
-  private prisma = prisma.user;
+  private user = prisma.user;
 
-  public login = async (payload: LoginBodyCreate) => {
-    const foundUser = await this.prisma.findFirst({
-      where: { email: payload.email },
+  public login = async ({ email, password }: LoginBodyCreate) => {
+    const foundUser = await this.user.findFirst({
+      where: { email: email },
     });
 
     if (!foundUser) {
       throw new AppError("User not exists", 404);
     }
 
-    const passwordMatch = compare(payload.password, foundUser.password);
+    const passwordMatch = await compare(password, foundUser.password);
 
     if (!passwordMatch) {
       throw new AppError("Email and password doesn't match", 401);
