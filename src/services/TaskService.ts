@@ -1,25 +1,20 @@
 import { prisma } from "../database";
-import {
-  Task,
-  TaskBodyCreate,
-  TaskBodyReturn,
-  TaskUpdate,
-} from "../interfaces";
+import { Task, TaskBodyCreate, TaskUpdate } from "../interfaces";
 import { taskReturnSchema, taskSchema } from "../schemas";
 
 export class TaskService {
   private prisma = prisma.task;
 
   public create = async (
-    payload: TaskBodyCreate,
-    userId: number
+    userId: number,
+    payload: TaskBodyCreate
   ): Promise<Task> => {
-    const createTask = { ...payload, userId };
+    const newTask = { ...payload, userId };
 
-    const newTask = await this.prisma.create({
-      data: createTask,
+    const create = await this.prisma.create({
+      data: newTask,
     });
-    return taskSchema.parse(newTask);
+    return taskSchema.parse(create);
   };
 
   public findMany = async (
@@ -43,6 +38,9 @@ export class TaskService {
 
     const taskReturn = this.prisma.findMany({
       where: { userId },
+      include: {
+        category: true,
+      },
     });
 
     return taskReturnSchema.array().parse(taskReturn);
