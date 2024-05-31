@@ -1,5 +1,8 @@
-export const category = {
-  name: "Example",
+export const category = (userId: number) => {
+  return {
+    name: "Example",
+    userId,
+  };
 };
 
 export const invalidDataCategory = {

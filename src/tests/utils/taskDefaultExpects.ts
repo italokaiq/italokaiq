@@ -5,12 +5,14 @@ export interface ITask {
   title: string;
   content: string;
   finished: boolean;
+  userId: number;
   categoryId?: number;
 }
 
-export const taskDefaultExpects = (task: ITask) => {
+export const taskDefaultExpects = (task: ITask, userId: number) => {
   expect(task).toBeDefined();
   expect(task).toBeTypeOf("object");
+  expect(task).toEqual;
 
   expect(task.id).toBeDefined();
   expect(task.id).toBeTypeOf("number");

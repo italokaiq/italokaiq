@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../database";
+import { prisma } from "../database/database";
 import { AppError } from "../errors";
 
 class EnsureTaskMiddleware {

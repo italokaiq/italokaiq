@@ -38,18 +38,20 @@ export const getTaskWithCategory = async () => {
   };
 };
 
-export const getTaskList = async () => {
+export const getTaskList = async (userId: number) => {
   const category = await prisma.category.findFirst();
 
   return [
     {
       title: "Lorem ipsum",
       content: "Lorem ipsum",
+      userId,
     },
     {
       title: "Lorem ipsum",
       content: "Lorem ipsum",
       categoryId: category?.id,
+      userId,
     },
   ];
 };

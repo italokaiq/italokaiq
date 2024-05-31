@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodSchema } from "zod";
-import { prisma } from "../database";
+import { prisma } from "../database/database";
 import { AppError } from "../errors";
 import { verify } from "jsonwebtoken";
 

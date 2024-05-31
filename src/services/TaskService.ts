@@ -1,4 +1,4 @@
-import { prisma } from "../database";
+import { prisma } from "../database/database";
 import { Task, TaskBodyCreate, TaskUpdate } from "../interfaces";
 import { taskReturnSchema, taskSchema } from "../schemas";
 

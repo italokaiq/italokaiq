@@ -1,4 +1,4 @@
-import { prisma } from "../database";
+import { prisma } from "../database/database";
 import { Category, CategoryBodyCreate } from "../interfaces";
 import { categorySchema } from "../schemas";
 

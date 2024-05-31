@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs";
-import { prisma } from "../database";
+import { prisma } from "../database/database";
 import { UserBodyCreate, UserReturn } from "../interfaces";
 import { userReturnSchema } from "../schemas";
 

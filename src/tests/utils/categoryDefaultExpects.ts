@@ -4,7 +4,7 @@ export interface ICategory {
   name: string;
 }
 
-export const categoryDefaultExpects = (category: ICategory) => {
+export const categoryDefaultExpects = async (category: ICategory) => {
   expect(category).toBeDefined();
   expect(category).toBeTypeOf("object");
   expect(category.name).toBeDefined();
