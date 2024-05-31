@@ -1,5 +1,4 @@
 import { describe, it } from "vitest";
-import { prisma } from "../../../database/prisma";
 import { task } from "../../mocks/tasks.mocks";
 import { request } from "../../setupFiles";
 import { secondUserMock } from "../../mocks/user.mocks";
@@ -7,6 +6,7 @@ import {
   generateAuthentication,
   generateInvalidToken,
 } from "../../utils/generateAuthentication";
+import { prisma } from "../../../database/database";
 
 const deleteTaskBeforeEach = async () => {
   const { user: user1, token: token1 } = await generateAuthentication();

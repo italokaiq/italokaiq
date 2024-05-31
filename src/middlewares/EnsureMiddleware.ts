@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodSchema } from "zod";
-import { prisma } from "../database/database";
 import { AppError } from "../errors";
 import { verify } from "jsonwebtoken";
+import { prisma } from "../database/database";
 
 export class EnsureMiddleware {
   public bodyIsValid =
@@ -17,17 +17,15 @@ export class EnsureMiddleware {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> => {
+  ) => {
     const email = req.body.email;
-    const findEmail = await prisma.user.findFirst({
-      where: { email },
-    });
+    const existsEmail = await prisma.user.findFirst({ where: { email } });
 
-    if (findEmail) {
+    if (existsEmail) {
       throw new AppError("This email is already registered", 409);
     }
 
-    return next();
+    next();
   };
 
   public isAuthenticaded = (
@@ -42,6 +40,7 @@ export class EnsureMiddleware {
     }
 
     const [_, token] = authorization.split(" ");
+
     const secret = process.env.JWT_SECRET!;
 
     res.locals.decoded = verify(token, secret);
@@ -53,7 +52,7 @@ export class EnsureMiddleware {
     req: Request,
     res: Response,
     next: NextFunction
-  ) => {
+  ): Promise<void> => {
     const { decoded } = res.locals;
     const { userId } = req.params;
 

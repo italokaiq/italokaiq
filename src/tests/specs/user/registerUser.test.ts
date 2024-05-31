@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { prisma } from "../../../database/prisma";
 import { request } from "../../setupFiles";
 import { userMock, invalidDataUserMock } from "../../mocks/user.mocks";
 import { userDefaultExpects } from "../../utils/userDefaultExpects";
+import { prisma } from "../../../database/database";
 
 describe("register user", () => {
   it("should be able to register a user sucessfully", async () => {

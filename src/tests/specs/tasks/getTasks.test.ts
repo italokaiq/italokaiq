@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { prisma } from "../../../database/prisma";
 import { category } from "../../mocks/category.mocks";
 import { getTaskList, task } from "../../mocks/tasks.mocks";
 import { request } from "../../setupFiles";
@@ -10,6 +9,7 @@ import {
   generateAuthentication,
   generateInvalidToken,
 } from "../../utils/generateAuthentication";
+import { prisma } from "../../../database/database";
 
 const getTasksBeforeEach = async () => {
   const { user: user1, token: token1 } = await generateAuthentication();

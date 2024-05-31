@@ -1,22 +1,23 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../errors/AppError";
 import { prisma } from "../database/database";
-import { AppError } from "../errors";
 
 class EnsureCategoryMiddleware {
   public idExists = async (req: Request, res: Response, next: NextFunction) => {
-    const id = Number(req.params.id);
+    const categoryId = req.params.id;
+
     const category = await prisma.category.findFirst({
-      where: { id },
+      where: { id: Number(categoryId) },
       include: { user: true },
     });
 
     if (!category) {
-      throw new AppError("category not found", 404);
+      throw new AppError("Category not found", 404);
     }
 
     res.locals.category = category;
 
-    return next();
+    next();
   };
 
   public isCategoryOwner = async (

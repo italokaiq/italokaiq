@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../errors/AppError";
 import { prisma } from "../database/database";
-import { AppError } from "../errors";
 
 class EnsureTaskMiddleware {
   public idExists = async (req: Request, res: Response, next: NextFunction) => {
-    const id = Number(req.params.id);
+    const { id } = req.params;
     const task = await prisma.task.findFirst({
-      where: { id },
+      where: { id: Number(id) },
       include: { category: true },
     });
 
@@ -24,19 +24,19 @@ class EnsureTaskMiddleware {
     res: Response,
     next: NextFunction
   ) => {
-    const categoryId = Number(req.body.categoryId);
-
+    const { categoryId } = req.body;
     if (!categoryId) {
       return next();
     }
-
     const task = await prisma.task.findFirst({
-      where: { categoryId },
+      where: { id: Number(categoryId) },
     });
 
     if (!task) {
       throw new AppError("Category not found", 404);
     }
+
+    next();
   };
 
   public isTaskOwner = async (

@@ -22,7 +22,7 @@ export class TaskService {
     search?: string | undefined
   ): Promise<Task[]> => {
     if (search) {
-      const taskSearchReturn = await this.prisma.findMany({
+      const categoryReturn = await prisma.task.findMany({
         where: {
           category: {
             name: { contains: search, mode: "insensitive" },
@@ -33,10 +33,10 @@ export class TaskService {
         },
       });
 
-      return taskReturnSchema.array().parse(taskSearchReturn);
+      return taskReturnSchema.array().parse(categoryReturn);
     }
 
-    const taskReturn = this.prisma.findMany({
+    const taskReturn = await prisma.task.findMany({
       where: { userId },
       include: {
         category: true,

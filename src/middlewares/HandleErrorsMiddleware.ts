@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 import { AppError } from "../errors";
 import { JsonWebTokenError } from "jsonwebtoken";
 
-export class HandleErrorsMiddleware {
+class HandleErrorsMiddleware {
   static execute(
     error: Error,
     req: Request,
@@ -22,7 +22,7 @@ export class HandleErrorsMiddleware {
       return res.status(400).json(error.flatten().fieldErrors);
     }
 
-    console.log(error);
+    console.error(error.message);
     return res.status(500).json({ message: "Internal server error." });
   }
 }
