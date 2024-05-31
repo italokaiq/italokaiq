@@ -25,13 +25,16 @@ export class TaskService {
   public findMany = async (
     userId: number,
     search?: string | undefined
-  ): Promise<TaskBodyReturn[]> => {
+  ): Promise<Task[]> => {
     if (search) {
       const taskSearchReturn = await this.prisma.findMany({
         where: {
           category: {
             name: { contains: search, mode: "insensitive" },
           },
+        },
+        include: {
+          category: true,
         },
       });
 
@@ -45,7 +48,7 @@ export class TaskService {
     return taskReturnSchema.array().parse(taskReturn);
   };
 
-  public findOne = async (task: Task): Promise<TaskBodyReturn> => {
+  public findOne = async (task: Task): Promise<Task> => {
     const result = await this.prisma.findFirst({
       where: { id: task.id },
     });
