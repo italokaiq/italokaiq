@@ -15,7 +15,7 @@ export const taskCreateSchema = taskSchema.omit({
   userId: true,
 });
 
-export const taskUpadateSchema = taskCreateSchema.partial();
+export const taskUpdateSchema = taskCreateSchema.partial();
 
 export const taskReturnSchema = taskSchema
   .extend({

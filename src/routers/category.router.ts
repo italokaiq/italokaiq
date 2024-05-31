@@ -1,21 +1,21 @@
 import { Router } from "express";
-import { CategoryController } from "../controller";
-import { ensure, ensureCategory } from "../middlewares";
 import { categoryCreateSchema } from "../schemas";
+import { CategoryController } from "../controller";
+import { auth, ensure, ensureCategory } from "../middlewares";
 
 export const categoryRouter = Router();
-const userController = new CategoryController();
+const categoryController = new CategoryController();
 
-categoryRouter.use("/", ensure.isAuthenticaded);
+categoryRouter.use("", auth.isAuthenticated);
 
 categoryRouter.post(
   "/",
   ensure.bodyIsValid(categoryCreateSchema),
-  userController.create
+  categoryController.create
 );
-categoryRouter.get(
+categoryRouter.delete(
   "/:id",
   ensureCategory.idExists,
   ensureCategory.isCategoryOwner,
-  userController.delete
+  categoryController.delete
 );

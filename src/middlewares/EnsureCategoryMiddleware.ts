@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { AppError } from "../errors/AppError";
 import { prisma } from "../database/database";
+import { AppError } from "../errors";
 
 class EnsureCategoryMiddleware {
   public idExists = async (req: Request, res: Response, next: NextFunction) => {

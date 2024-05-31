@@ -1,12 +1,12 @@
 import { Router } from "express";
+import { taskCreateSchema, taskUpdateSchema } from "../schemas";
 import { TaskController } from "../controller";
-import { ensure, ensureTask } from "../middlewares";
-import { taskCreateSchema, taskUpadateSchema } from "../schemas";
+import { auth, ensure, ensureTask } from "../middlewares";
 
 export const taskRouter = Router();
 const taskController = new TaskController();
 
-taskRouter.use("/", ensure.isAuthenticaded);
+taskRouter.use("/", auth.isAuthenticated);
 
 taskRouter.post(
   "/",
@@ -14,14 +14,15 @@ taskRouter.post(
   ensureTask.idBodyExists,
   taskController.create
 );
+
 taskRouter.get("/", taskController.findMany);
 
 taskRouter.use("/:id", ensureTask.idExists);
-
 taskRouter.get("/:id", taskController.findOne);
+
 taskRouter.patch(
   "/:id",
-  ensure.bodyIsValid(taskUpadateSchema),
+  ensure.bodyIsValid(taskUpdateSchema),
   ensureTask.isTaskOwner,
   taskController.update
 );

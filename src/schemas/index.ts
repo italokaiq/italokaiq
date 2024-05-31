@@ -5,5 +5,5 @@ export {
   taskSchema,
   taskCreateSchema,
   taskReturnSchema,
-  taskUpadateSchema,
+  taskUpdateSchema,
 } from "./task.schema";

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
-import { AppError } from "../errors";
 import { JsonWebTokenError } from "jsonwebtoken";
+import { AppError } from "../errors";
 
 class HandleErrorsMiddleware {
   static execute(
